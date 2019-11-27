@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +36,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private ImageView posterMovie, backDropMovie;
     private String movieNameDetail, movieTglDetail, movieDescDetail, imgDetail, imgBackDrop;
     private ProgressBar pbMovie;
+    private ScrollView sViewDetail;
     private float rateDetailMovie1;
     private static final String API_KEY = "6acbbbb9dc49a42c7a5afa2490cd87b1";
 
@@ -56,6 +58,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         posterMovie = findViewById(R.id.image_detail_movie);
         backDropMovie = findViewById(R.id.backdrop_detail_movie);
         pbMovie = findViewById(R.id.loading_movie_detail);
+        sViewDetail = findViewById(R.id.scrollView);
         tvNameMovie = findViewById(R.id.title_detail_movie);
         tvTglMovie = findViewById(R.id.tgl_detail_movie);
         tvDescMovie = findViewById(R.id.detail_description_movie);
@@ -67,10 +70,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         getDetailDataMovie(dataMovie.getMovieID_DETAIL());
 
         movieNameDetail = dataMovie.getDetailNameMovie();
+        System.out.println("data name : "+dataMovie.getDetailNameMovie());
         movieTglDetail = dataMovie.getTglMovieDetail();
+        System.out.println("data tgl: "+dataMovie.getTglMovieDetail());
         movieDescDetail = dataMovie.getDescMovieDetail();
         imgDetail = dataMovie.getImageOrigin();
+        System.out.println("data picture 1 : "+dataMovie.getImageOrigin());
         imgBackDrop = dataMovie.getBackdropPict();
+        System.out.println("data picture 2 : "+dataMovie.getBackdropPict());
         rateDetailMovie1 = (float) dataMovie.getStar();
 
         if (getSupportActionBar() != null) {
@@ -78,7 +85,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
     }
-
 
     private void setDataMovie() {
 
@@ -92,7 +98,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         Glide.with(this)
                 .load("https://image.tmdb.org/t/p/original/" + imgDetail)
                 .centerCrop()
-                .apply(new RequestOptions().override(350, 550))
                 .placeholder(R.mipmap.ic_launcher)
                 .into(posterMovie);
 
@@ -110,6 +115,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 pbMovie.setVisibility(View.GONE);
+                sViewDetail.setVisibility(View.VISIBLE);
                 try {
                     String responeAPI = new String(responseBody);
                     JSONObject objectAPI = new JSONObject(responeAPI);

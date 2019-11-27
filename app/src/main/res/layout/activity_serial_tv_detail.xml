@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +8,21 @@
     android:id="@+id/scroll_serial"
     android:layout_height="match_parent"
     tools:context=".detail.SerialTVDetailActivity">
+
+    <ProgressBar
+        android:id="@+id/loading_tv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:progressTint="@color/colorPrimaryDark"
+        android:layout_gravity="center"/>
+
+    <ScrollView
+        android:id="@+id/scrollViewTV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:visibility="invisible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -70,6 +85,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:text="@string/tgl_detail_serial"
             android:textSize="15sp"
@@ -78,9 +94,9 @@
             app:layout_constraintStart_toEndOf="@+id/image_detail_serial"
             app:layout_constraintTop_toBottomOf="@+id/title_detail_serial" />
 
-
-        <TextView
-            android:id="@+id/tv_crew_detail_serial"
+        <RatingBar
+            android:id="@+id/RATE_TV_detail"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -89,50 +105,28 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
-            android:text="@string/Featured_Crew_serial"
-            android:textColor="@android:color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
+            android:progressTint="#F3FF33"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image_detail_serial"
             app:layout_constraintTop_toBottomOf="@+id/tgl_detail_serial" />
 
         <TextView
-            android:id="@+id/crew_detail_serial"
+            android:id="@+id/genre_tv_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
-            android:text="@string/crew_detail_serial"
-            android:textSize="17sp"
             android:textStyle="bold"
+            android:text="@string/genre_movie"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image_detail_serial"
-            app:layout_constraintTop_toBottomOf="@+id/tv_crew_detail_serial" />
-
-        <TextView
-            android:id="@+id/position_detail_serial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/position_detail_serial"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/image_detail_serial"
-            app:layout_constraintTop_toBottomOf="@+id/crew_detail_serial" />
-
+            app:layout_constraintTop_toBottomOf="@+id/RATE_TV_detail" />
 
         <TextView
             android:id="@+id/tv_desc_detail_serial"
@@ -160,9 +154,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:padding="3dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:fontFamily="serif"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,5 +162,5 @@
             tools:text="@string/desc_detail_serial" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

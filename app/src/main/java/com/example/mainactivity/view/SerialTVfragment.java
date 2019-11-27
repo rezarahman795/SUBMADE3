@@ -2,22 +2,27 @@ package com.example.mainactivity.view;
 
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.mainactivity.R;
+import com.example.mainactivity.adapter.MovieAdapter;
 import com.example.mainactivity.adapter.SerialTVAdapter;
 import com.example.mainactivity.detail.SerialTVDetailActivity;
+import com.example.mainactivity.model.Movie;
 import com.example.mainactivity.model.SerialTV;
+import com.example.mainactivity.viewmodel.SerialTVviewModel;
 
 import java.util.ArrayList;
 
@@ -27,6 +32,8 @@ import java.util.ArrayList;
 public class SerialTVfragment extends Fragment {
 
     private RecyclerView rv_SerialTV;
+    private ProgressBar pb_TV;
+    private SerialTVAdapter sTV_Adapter;
     private ArrayList<SerialTV> listSerialTV = new ArrayList<>();
 
 
@@ -46,56 +53,59 @@ public class SerialTVfragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         rv_SerialTV = view.findViewById(R.id.rv_tv_serial);
         rv_SerialTV.setHasFixedSize(true);
+        pb_TV = view.findViewById(R.id.loading_list_TV);
 
-        listSerialTV.addAll(getListSerialTV());
 
         showRecyclerSerialTV();
     }
 
-    public ArrayList<SerialTV> getListSerialTV() {
-        String[]dataNameSerial =getResources().getStringArray(R.array.data_name_serial);
-        String[]dataTglSerial=getResources().getStringArray(R.array.data_tgl_serial);
-        TypedArray imgSerial= getResources().obtainTypedArray(R.array.data_picture_serial);
-        String[]dataCrewSerial = getResources().getStringArray(R.array.data_name_crew_serial);
-        String[]dataCrewDetailSerial = getResources().getStringArray(R.array.detail_position_serial);
-        String[]dataDescSerial= getResources().getStringArray(R.array.data_description_serial);
-
-        ArrayList<SerialTV> listDataSerialTV = new ArrayList<>();
-
-        for (int i = 0 ; i<imgSerial.length();i++){
-            SerialTV dataSerialTVfg = new SerialTV();
-            dataSerialTVfg.setNamaSerial(dataNameSerial[i]);
-            dataSerialTVfg.setTglSerial(dataTglSerial[i]);
-            dataSerialTVfg.setDescSerial(dataDescSerial[i]);
-            dataSerialTVfg.setCrewSerial(dataCrewSerial[i]);
-            dataSerialTVfg.setCrewDetailSerial(dataCrewDetailSerial[i]);
-            dataSerialTVfg.setPicture(imgSerial.getResourceId(i,-1));
-
-            listDataSerialTV.add(dataSerialTVfg);
-
-        }
-        return listDataSerialTV;
-
-    }
-
     private void showRecyclerSerialTV() {
-        rv_SerialTV.setLayoutManager(new LinearLayoutManager(getContext()));
-        SerialTVAdapter serialTVAdapter= new SerialTVAdapter(listSerialTV);
-        rv_SerialTV.setAdapter(serialTVAdapter);
 
-        serialTVAdapter.setOnItemClickCallback(new SerialTVAdapter.OnItemClickCallback() {
+        SerialTVviewModel serialTVviewModel = ViewModelProviders.of(this).get(SerialTVviewModel.class);
+        serialTVviewModel.getSerialTV().observe(this, getMovieObserve);
+
+        sTV_Adapter = new SerialTVAdapter(listSerialTV);
+        sTV_Adapter.notifyDataSetChanged();
+
+        serialTVviewModel.setTVFragment();
+        showLoadingFragment(true);
+
+        rv_SerialTV.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_SerialTV.setAdapter(sTV_Adapter);
+
+
+        sTV_Adapter.setOnItemClickCallback(new SerialTVAdapter.OnItemClickCallback() {
             @Override
             public void onItemClicked(SerialTV dataSerial) {
                 showSelectedSerialTV(dataSerial);
             }
         });
     }
+    private Observer<ArrayList<SerialTV>> getMovieObserve = new Observer<ArrayList<SerialTV>>() {
+        @Override
+        public void onChanged(ArrayList<SerialTV> tvITEMS) {
+            showLoadingFragment(true);
+
+            if (tvITEMS != null) {
+                sTV_Adapter.setDataTV(tvITEMS);
+                showLoadingFragment(false);
+            }
+        }
+    };
 
     private void showSelectedSerialTV(SerialTV detailDataSerialTV) {
         Intent serialTVintent = new Intent(getContext(), SerialTVDetailActivity.class);
         serialTVintent.putExtra("GET_DATA_SERIAL_TV", detailDataSerialTV);
         startActivity(serialTVintent);
         getActivity().overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    private void showLoadingFragment(boolean state) {
+        if (state) {
+            pb_TV.setVisibility(View.VISIBLE);
+        } else {
+            pb_TV.setVisibility(View.GONE);
+        }
     }
 
 

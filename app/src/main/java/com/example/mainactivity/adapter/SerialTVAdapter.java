@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class SerialTVAdapter extends RecyclerView.Adapter<SerialTVAdapter.SerialViewHolder> {
 
-    ArrayList<SerialTV> listSerialTV ;
+    private ArrayList<SerialTV> listSerialTV ;
     private OnItemClickCallback onItemClickCallback;
 
     public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
@@ -26,8 +27,17 @@ public class SerialTVAdapter extends RecyclerView.Adapter<SerialTVAdapter.Serial
     }
 
     public SerialTVAdapter(ArrayList<SerialTV> listSerialTV) {
+
         this.listSerialTV = listSerialTV;
     }
+
+    public void setDataTV(ArrayList<SerialTV>listDataTV){
+        listSerialTV.clear();
+        listSerialTV.addAll(listDataTV);
+        notifyDataSetChanged();
+    }
+
+
 
     @NonNull
     @Override
@@ -40,15 +50,14 @@ public class SerialTVAdapter extends RecyclerView.Adapter<SerialTVAdapter.Serial
     public void onBindViewHolder(@NonNull final SerialViewHolder holder, int position) {
         SerialTV mySerialTV = listSerialTV.get(position);
 
-        holder.txtNameSerial.setText(mySerialTV.getNamaSerial());
+        holder.txtNameSerial.setText(mySerialTV.getSerialNameTV());
         holder.txtTglSerial.setText(mySerialTV.getTglSerial());
-        holder.txtCrewSerial.setText(mySerialTV.getCrewSerial());
-        holder.txtCrewPositionSerial.setText(mySerialTV.getCrewDetailSerial());
         holder.txtDescSerial.setText(mySerialTV.getDescSerial());
-        holder.pictSerial.setImageResource(mySerialTV.getPicture());
+        holder.rateTV.setRating((float)(mySerialTV.getRateTV()));
 
         Glide.with(holder.itemView.getContext())
-                .load(mySerialTV.getPicture())
+                .load("https://image.tmdb.org/t/p/original/"+mySerialTV.getPictureTV())
+                .placeholder((R.mipmap.ic_launcher))
                 .apply(new RequestOptions().override(350,550))
                 .into(holder.pictSerial);
 
@@ -69,7 +78,8 @@ public class SerialTVAdapter extends RecyclerView.Adapter<SerialTVAdapter.Serial
     }
 
     public class SerialViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNameSerial,txtTglSerial,txtDescSerial,txtCrewSerial,txtCrewPositionSerial;
+        TextView txtNameSerial,txtTglSerial,txtDescSerial;
+        RatingBar rateTV;
         ImageView pictSerial;
 
         public SerialViewHolder(View itemView) {
@@ -79,8 +89,8 @@ public class SerialTVAdapter extends RecyclerView.Adapter<SerialTVAdapter.Serial
             txtNameSerial= itemView.findViewById(R.id.item_txt_name_serial);
             txtTglSerial= itemView.findViewById(R.id.item_txt_tgl_serial);
             txtDescSerial= itemView.findViewById(R.id.txt_desc_serial);
-            txtCrewSerial= itemView.findViewById(R.id.item_crew_serial);
-            txtCrewPositionSerial= itemView.findViewById(R.id.item_position_serial);
+            rateTV = itemView.findViewById(R.id.TV_RATE);
+
         }
     }
     public interface OnItemClickCallback {

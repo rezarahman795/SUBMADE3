@@ -52,6 +52,7 @@
             android:id="@+id/item_txt_tgl_serial"
             android:layout_marginStart="26dp"
             android:layout_marginLeft="26dp"
+            android:layout_marginTop="5dp"
             android:text="@string/item_tgl_serial"
             android:textColor="@android:color/white"
             android:layout_toEndOf="@+id/gambarSerial"
@@ -60,36 +61,20 @@
             android:textSize="15sp"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RatingBar
+            android:id="@+id/TV_RATE"
+            android:progressTint="#F3FF33"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="85dp"
             android:layout_height="wrap_content"
-            android:text="@string/item_crew_serial"
             android:layout_below="@+id/item_txt_tgl_serial"
-            android:visibility="invisible"
-            android:layout_marginStart="26dp"
-            android:id="@+id/item_crew_serial"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="26dp"
-            android:layout_toEndOf="@+id/gambarSerial"
-            android:layout_toRightOf="@+id/gambarSerial"
-            />
+            android:layout_alignStart="@+id/item_txt_tgl_serial"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/black"
+            android:padding="2dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/item_position_serial"
-            android:layout_below="@+id/item_crew_serial"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="26dp"
-            android:id="@+id/item_position_serial"
-            android:layout_marginLeft="26dp"
-            android:visibility="invisible"
-            android:layout_toEndOf="@+id/gambarSerial"
-            android:layout_toRightOf="@+id/gambarSerial"
-            />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,11 +83,11 @@
             android:layout_marginStart="26dp"
             android:layout_marginLeft="26dp"
             android:text="@string/item_desc_serial"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:textColor="@android:color/white"
             android:layout_toEndOf="@+id/gambarSerial"
             android:layout_toRightOf="@+id/gambarSerial"
-            android:layout_below="@+id/item_txt_tgl_serial"
+            android:layout_below="@+id/TV_RATE"
             android:textSize="15sp"
             android:ellipsize="end"
             android:maxLines="6"

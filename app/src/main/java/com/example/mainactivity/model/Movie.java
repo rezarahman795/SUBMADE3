@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Movie implements Parcelable {
     private int movieID_DETAIL;
-    private String descMovieDetail, detailNameMovie, tglMovieDetail,backdropPict,imageOrigin,genre;
+    private String descMovieDetail, detailNameMovie, tglMovieDetail, backdropPict, imageOrigin, genre;
     double star;
 
     public Movie(JSONObject objMovie) {
@@ -31,11 +31,12 @@ public class Movie implements Parcelable {
 
             this.movieID_DETAIL = idMovie;
             this.detailNameMovie = title;
-            this.descMovieDetail = detailDesc;
             this.tglMovieDetail = toDate;
+            this.descMovieDetail = detailDesc;
+            this.imageOrigin = poster;
             this.backdropPict = backDrop;
             this.star = rating;
-            this.imageOrigin = poster;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,11 +51,11 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.movieID_DETAIL);
         dest.writeString(this.detailNameMovie);
-        dest.writeString(this.backdropPict);
-        dest.writeString(this.imageOrigin);
+        dest.writeString(this.tglMovieDetail);
         dest.writeString(this.descMovieDetail);
         dest.writeString(this.genre);
-        dest.writeString(this.tglMovieDetail);
+        dest.writeString(this.imageOrigin);
+        dest.writeString(this.backdropPict);
         dest.writeDouble(this.star);
     }
 
@@ -62,10 +63,10 @@ public class Movie implements Parcelable {
     protected Movie(Parcel in) {
         this.movieID_DETAIL = in.readInt();
         this.detailNameMovie = in.readString();
-        this.tglMovieDetail= in.readString();
+        this.tglMovieDetail = in.readString();
         this.descMovieDetail = in.readString();
         this.genre = in.readString();
-        this.imageOrigin= in.readString();
+        this.imageOrigin = in.readString();
         this.backdropPict = in.readString();
         this.star = in.readDouble();
     }

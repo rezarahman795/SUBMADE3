@@ -2,72 +2,48 @@ package com.example.mainactivity.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.RatingBar;
 
+import org.json.JSONObject;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class SerialTV implements Parcelable {
 
-    private int picture,backdropPict;
-    private String namaSerial,tglSerial,descSerial,crewSerial,crewDetailSerial;
+    private int ID_TV;
+    private String serialNameTV,tglSerial,descSerial,backdropPictTV,pictureTV;
+    double rateTV;
 
-    public SerialTV(){
+    public SerialTV(JSONObject objTV){
+        try {
+            Integer idMovieTV = objTV.getInt("id");
+            String titleTV = objTV.getString("original_name");
+            String toDateTV = objTV.getString("first_air_date");
+            double ratingTV = objTV.getDouble("vote_average");
+            String detailDescTV = objTV.getString("overview");
+            String posterTV = objTV.getString("poster_path");
+            String backDropTV = objTV.getString("backdrop_path");
 
+            this.ID_TV = idMovieTV;
+            this.serialNameTV = titleTV;
+            this.tglSerial = toDateTV;
+            this.descSerial = detailDescTV;
+            this.pictureTV = posterTV;
+            this.backdropPictTV = backDropTV;
+            this.rateTV = ratingTV;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-    public int getPicture() {
-        return picture;
-    }
-
-    public void setPicture(int picture) {
-        this.picture = picture;
-    }
-
-    public int getBackdropPict() {
-        return backdropPict;
-    }
-
-    public void setBackdropPict(int backdropPict) {
-        this.backdropPict = backdropPict;
-    }
-
-    public String getNamaSerial() {
-        return namaSerial;
-    }
-
-    public void setNamaSerial(String namaSerial) {
-        this.namaSerial = namaSerial;
-    }
-
-    public String getTglSerial() {
-        return tglSerial;
-    }
-
-    public void setTglSerial(String tglSerial) {
-        this.tglSerial = tglSerial;
-    }
-
-    public String getDescSerial() {
-        return descSerial;
-    }
-
-    public void setDescSerial(String descSerial) {
-        this.descSerial = descSerial;
-    }
-
-    public String getCrewSerial() {
-        return crewSerial;
-    }
-
-    public void setCrewSerial(String crewSerial) {
-        this.crewSerial = crewSerial;
-    }
-
-    public String getCrewDetailSerial() {
-        return crewDetailSerial;
-    }
-
-    public void setCrewDetailSerial(String crewDetailSerial) {
-        this.crewDetailSerial = crewDetailSerial;
-    }
-
 
     @Override
     public int describeContents() {
@@ -76,22 +52,22 @@ public class SerialTV implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(picture);
-        dest.writeInt(backdropPict);
-        dest.writeString(namaSerial);
+        dest.writeInt(ID_TV);
+        dest.writeString(pictureTV);
+        dest.writeString(backdropPictTV);
+        dest.writeString(serialNameTV);
         dest.writeString(tglSerial);
         dest.writeString(descSerial);
-        dest.writeString(crewSerial);
-        dest.writeString(crewDetailSerial);
+        dest.writeDouble(rateTV);
     }
     protected SerialTV(Parcel in) {
-        picture = in.readInt();
-        backdropPict = in.readInt();
-        namaSerial = in.readString();
+        ID_TV = in.readInt();
+        pictureTV = in.readString();
+        backdropPictTV = in.readString();
+        serialNameTV = in.readString();
         tglSerial = in.readString();
         descSerial = in.readString();
-        crewSerial = in.readString();
-        crewDetailSerial = in.readString();
+        rateTV = in.readDouble();
     }
 
     public static final Creator<SerialTV> CREATOR = new Creator<SerialTV>() {

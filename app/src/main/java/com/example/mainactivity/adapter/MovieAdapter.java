@@ -57,7 +57,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.txtDescMovie.setText(myMovie.getDescMovieDetail());
 
         Glide.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original"+myMovie.getImageOrigin())
+                .load("https://image.tmdb.org/t/p/original/"+myMovie.getImageOrigin())
                 .placeholder(R.mipmap.ic_launcher)
                 .apply(new RequestOptions().override(350,550))
                 .into(holder.pictMovies);
